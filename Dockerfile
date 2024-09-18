@@ -1,20 +1,16 @@
-FROM odoo:17.0
-
-ARG LOCALE=en_US.UTF-8
-
-ENV LANGUAGE=${LOCALE}
-ENV LC_ALL=${LOCALE}
-ENV LANG=${LOCALE}
+FROM outofreality/odoo-erp:latest
 
 USER 0
+RUN mkdir -p /var/lib/odoo/sessions && chown -R odoo:odoo /var/lib/odoo/sessions
 
-RUN apt-get -y update && apt-get install -y --no-install-recommends locales netcat-openbsd \
-    && locale-gen ${LOCALE}
+COPY entrypoint.sh /app/entrypoint.sh
 
-WORKDIR /app
+RUN chmod +x /app/entrypoint.sh
 
-COPY --chmod=755 entrypoint.sh ./
+
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --no-cache-dir face_recognition
 
 ENTRYPOINT ["/bin/sh"]
 
-CMD ["entrypoint.sh"]
+CMD ["/app/entrypoint.sh"]

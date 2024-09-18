@@ -10,7 +10,6 @@ echo Database is now available
 
 exec odoo \
     --http-port="${PORT}" \
-    --init=all \
     --without-demo=True \
     --proxy-mode \
     --db_host="${ODOO_DATABASE_HOST}" \
@@ -18,6 +17,7 @@ exec odoo \
     --db_user="${ODOO_DATABASE_USER}" \
     --db_password="${ODOO_DATABASE_PASSWORD}" \
     --database="${ODOO_DATABASE_NAME}" \
+    --addons-path="/mnt/extra-addons/knowledge,/mnt/extra-addons/faceid-authentication,/usr/lib/python3/dist-packages/odoo/addons" \
     --smtp="${ODOO_SMTP_HOST}" \
     --smtp-port="${ODOO_SMTP_PORT_NUMBER}" \
     --smtp-user="${ODOO_SMTP_USER}" \
